@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Router } from 'react-router-dom';
+import { createHashHistory } from 'history';
+
 import './App.css';
+
+import routes from './router/index';
+import RouteWithSubRoutes from './router/RouteWithSubRoutes';
+
+export const history = createHashHistory();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router history={history}>
+        {/* <Route path="/" component={HomePage} /> */}
+        <RouteWithSubRoutes route={routes} />
+    </Router>
+  )
 }
 
-export default App;
+export default App
