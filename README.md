@@ -1,6 +1,10 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+项目使用此脚手架生成： [Create React App](https://github.com/facebook/create-react-app).
+
+## Tauri & Rust Installation
+
+[>> installation steps](./tauri_rust_install.md)
 
 ## Available Scripts
 
