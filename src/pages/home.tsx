@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { getCurrent, WebviewWindow } from '@tauri-apps/api/window';
-import { Event } from '_@tauri-apps_api@1.0.0-beta.8@@tauri-apps/api/event';
+import { Event } from '@tauri-apps/api/event';
+import { invoke, event } from '@tauri-apps/api';
 
 import { RouteConfig } from '../types';
 import RouteWithSubRoutes from '../router/RouteWithSubRoutes';
@@ -21,11 +22,21 @@ export default function Home(props: AppProps) {
   useEffect(() => {
     // emit an event that are only visible to the current window
     const current = getCurrent();
-    current.listen('event', (event: Event<unknown>) => {
+    current.listen('communication', (event: Event<unknown>) => {
       console.log(event.payload);
     });
-    current.emit('event', 'Tauri is awesome!');
-    
+    current.emit('communication', 'Tauri is awesome!(frontend)');
+
+    setInterval(() => {
+      invoke('hello_command', { key: 'hello_command', data: 'frontend', action: 'test' })
+        .then((msg: unknown) => {
+          console.log(`Hello from the backend: ${msg}`);
+        })
+        .catch(err => {
+          console.log('Error: ', err);
+        });
+    }, 5000);
+
   }, [])
 
   return (

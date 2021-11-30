@@ -1,5 +1,9 @@
+#[macro_use]
+extern crate json;
+
 use tauri::{Manager, Window};
 use std::thread::spawn;
+mod service;
 
 // the payload type must implement `Serialize`.
 #[derive(serde::Serialize)]
@@ -11,9 +15,7 @@ struct Payload {
 #[tauri::command]
 fn init_process(window: Window) {
   spawn(move || {
-    loop {
-      window.emit("event-name", Payload { message: "Tauri is awesome!".into() }).unwrap();
-    }
+    window.emit("communication", Payload { message: String::from("Tauri is awesome!") }).unwrap();
   });
 }
 
@@ -24,15 +26,15 @@ fn main() {
       let main_window = app.get_window("main").unwrap();
 
       // listen to the `event-name` (emitted on the `main` window)
-      main_window.listen("event-name", |event| {
+      main_window.listen("communication", |event| {
         println!("got window event-name with payload {:?}", event.payload());
       });
 
       // emit the `event-name` event to the `main` window
-      main_window.emit("event-name", Payload { message: String::from("Tauri is awesome!") }).unwrap();
+      main_window.emit("communication", Payload { message: String::from("Tauri is awesome!") }).unwrap();
       Ok(())
     })
-    .invoke_handler(tauri::generate_handler![init_process])
+    .invoke_handler(tauri::generate_handler![init_process, service::hello_command])
     .run(tauri::generate_context!())
     .expect("failed to run app");
 }
