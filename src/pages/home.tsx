@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getCurrent, WebviewWindow } from '@tauri-apps/api/window';
+import { Event } from '_@tauri-apps_api@1.0.0-beta.8@@tauri-apps/api/event';
+
 import { RouteConfig } from '../types';
 import RouteWithSubRoutes from '../router/RouteWithSubRoutes';
 
@@ -14,6 +17,16 @@ type AppProps = {
 export default function Home(props: AppProps) {
 
   const { routes } = props;
+
+  useEffect(() => {
+    // emit an event that are only visible to the current window
+    const current = getCurrent();
+    current.listen('event', (event: Event<unknown>) => {
+      console.log(event.payload);
+    });
+    current.emit('event', 'Tauri is awesome!');
+    
+  }, [])
 
   return (
     <div className="App">
