@@ -27,16 +27,6 @@ export default function Home(props: AppProps) {
     });
     current.emit('communication', 'Tauri is awesome!(frontend)');
 
-    setInterval(() => {
-      invoke('hello_command', { key: 'hello_command', data: 'frontend', action: 'test' })
-        .then((msg: unknown) => {
-          console.log(`Hello from the backend: ${msg}`);
-        })
-        .catch(err => {
-          console.log('Error: ', err);
-        });
-    }, 5000);
-
   }, [])
 
   return (

@@ -34,7 +34,13 @@ fn main() {
       main_window.emit("communication", Payload { message: String::from("Tauri is awesome!") }).unwrap();
       Ok(())
     })
-    .invoke_handler(tauri::generate_handler![init_process, service::hello_command])
+    .invoke_handler(
+      tauri::generate_handler![
+        init_process,
+        service::hello_command,
+        service::exec_command
+      ]
+    )
     .run(tauri::generate_context!())
     .expect("failed to run app");
 }
