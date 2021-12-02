@@ -1,5 +1,13 @@
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { invoke, event } from '@tauri-apps/api';
+
+import { Response, ServiceRequestFunction } from '../../types';
+
+export const test: ServiceRequestFunction = (command: string, params: any) => {
+  return invoke('hello_command', { req: { data: 'frontend', action: 'test' } })
+}
+
 
 import { Status, RootState } from "../../types";
 
