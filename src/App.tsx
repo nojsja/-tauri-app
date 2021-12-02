@@ -1,26 +1,30 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
-import { createHashHistory } from 'history';
-import { Provider } from 'react-redux';
+import { Route, Router } from 'react-router-dom';
+import { Provider } from 'react-redux'
 
-import { store } from './redux/store';
+import store from './stores/store'
+
+import { createHashHistory } from 'history';
+import RouteWithSubRoutes from './router/RouteWithSubRoutes';
+import routes from './router/index';
 
 import './App.css';
+import './index.css';
 
-import routes from './router/index';
-import RouteWithSubRoutes from './router/RouteWithSubRoutes';
-
+/* ------------------- global history ------------------- */
 export const history = createHashHistory();
 
 function App() {
   return (
     <Provider store={store}>
       <Router history={history}>
-          {/* <Route path="/" component={HomePage} /> */}
+        <Router history={history}>
           <RouteWithSubRoutes route={routes} />
+        </Router>
       </Router>
     </Provider>
-  )
+  );
 }
 
-export default App
+/* ------------------- export provider ------------------- */
+export default App;

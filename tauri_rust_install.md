@@ -60,13 +60,13 @@ create-tauri-app
 ## 进入 tauri 项目安装依赖
 
 ```bash
-yarn install
+cnpm install
 ```
 
 ## 开启前端服务和 tauri 服务
 
 ```bash
-yarn dev
+cnpm start
 tauri dev
 ```
 

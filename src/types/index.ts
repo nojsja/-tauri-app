@@ -2,7 +2,13 @@ export interface RouteConfig {
   path: string;
   component: React.ComponentType<any>;
   exact?: boolean;
+  routes?: RouteConfig[];
 };
+
+export interface ReduxAction {
+  type: string,
+  value: any
+}
 
 export type Callback<P, T> = (payload: P) => T;
 
@@ -116,6 +122,7 @@ export interface Status {
 }
 
 export interface RootState {
+  count: number,
   config: Config[];
   status: Status;
   settings: Settings;

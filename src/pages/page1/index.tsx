@@ -1,9 +1,10 @@
 import React from 'react';
+import { Button } from 'antd';
 
 export default function index() {
   return (
     <div>
-      Page1
+      <Button type="primary">Page1</Button> 
     </div>
   );
 };
